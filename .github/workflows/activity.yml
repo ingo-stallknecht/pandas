@@ -2,7 +2,6 @@ name: Activity
 
 on:
   schedule:
-    # Runs every 4 hours
     - cron: '0 */4 * * *'
   workflow_dispatch:
 
@@ -25,7 +24,7 @@ jobs:
           import os
           from datetime import datetime
 
-          if random.random() < 0.0:
+          if random.random() < 0.7:
               print("Skipping this window.")
               exit(0)
 
