@@ -24,83 +24,28 @@ jobs:
           import os
           from datetime import datetime
 
-          if random.random() < 0.7:
-              print("Skipping this window.")
+          if random.random() < 0.0: 
+              print("Skipping.")
               exit(0)
 
-          pandas_messages = [
-              "logging: clarify log level usage in io.parsers",
-              "logging: add debug logs for read_csv dtype inference",
-              "logging: improve warning message for deprecated axis arg",
-              "logging: standardize logger names in pandas.io.sql",
-              "logging: add trace logging to groupby aggregation path",
-              "logging: remove duplicate warning in concat internals",
-              "logging: make error log more actionable for invalid index",
-              "logging: downgrade noisy info logs to debug",
-              "logging: add context to timezone conversion warnings",
-              "logging: fix missing logger in pandas.core.reshape",
-              "logging: refactor logging setup for pandas.plotting",
-              "logging: add debug logs for nullable dtype casting",
-              "logging: clarify warning text for chained assignment",
-              "logging: ensure consistent logging in read_parquet",
-              "logging: add debug output for block consolidation",
-              "logging: improve warning when setting values on copy",
-              "logging: silence unnecessary logs during to_csv",
-              "logging: add debug logging for merge indicator handling",
-              "logging: make groupby warning message more precise",
-              "logging: remove outdated logging comment in resample",
-              "logging: add debug logs for Series.astype failures",
-              "logging: improve error message for invalid fillna method",
-              "logging: add debug output for rolling window validation",
-              "logging: normalize warning formatting across io modules",
-              "logging: clarify warning for non-unique columns",
-              "logging: add debug logs for Index alignment logic",
-              "logging: improve logging around sparse array conversion",
-              "logging: fix misleading warning in datetime parsing",
-              "logging: add trace logs for DataFrame.eval execution",
-              "logging: remove noisy logs from extension array ops",
-              "logging: improve error message for invalid freq",
-              "logging: add debug logs for concat axis resolution",
-              "logging: clarify warning for mixed timezone data",
-              "logging: ensure logger propagated correctly in pandas.core",
-              "logging: improve diagnostics for duplicated index errors",
-              "logging: add debug logs for reindex fill logic",
-              "logging: standardize warning messages for invalid casts",
-              "logging: add context to ExcelWriter warning",
-              "logging: clean up legacy logging code paths",
-              "logging: improve warning text for empty groupby results",
-              "logging: add debug logging for JSON normalization",
-              "logging: silence debug logs during DataFrame repr",
-              "logging: add debug logs for categorical ordering",
-              "logging: clarify warning for incompatible dtype assignment",
-              "logging: improve error log when parsing invalid dates",
-              "logging: add debug logs for pivot table margins",
-              "logging: normalize logging behavior in pandas.testing",
-              "logging: improve diagnostics for missing columns",
-              "logging: add debug logs for string accessor operations",
-              "logging: fix incorrect warning message in explode",
-              "logging: add trace logging for rolling.apply execution",
-              "logging: remove unused logger imports",
-              "logging: clarify warning when coercing numeric data",
-              "logging: improve logging around NA sentinel handling",
-              "logging: add debug logs for boolean indexing path",
-              "logging: standardize error messages for invalid joins",
-              "logging: improve warning for duplicate labels",
-              "logging: add debug logs for extension block construction",
-          ]
+          file_path = os.path.join(os.getcwd(), "activity_log.txt")
+          
+          if not os.path.exists(file_path):
+              with open(file_path, "w") as f:
+                  f.write("Initial Log\n")
 
-          iterations = random.randint(1, 3)
-          for i in range(iterations):
-              timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-              with open("activity_log.txt", "a") as f:
-                  f.write(f"Updated at {timestamp}\n")
-              
-              os.system('git config --global user.name "Ingo Stallknecht"')
-              os.system('git config --global user.email "ingostallknecht@gmail.com"')
-              os.system('git add activity_log.txt')
-              
-              msg = random.choice(pandas_messages)
-              os.system(f'git commit -m "{msg}"')
-
-          os.system('git push origin main')
+          timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+          with open(file_path, "a") as f:
+              f.write(f"Confirmed update at {timestamp}\n")
+          
+          os.system('git config --global user.name "Ingo Stallknecht"')
+          os.system('git config --global user.email "ingostallknecht@gmail.com"')
+          os.system('git add activity_log.txt')
+          
+          os.system('git commit -m "maint: automated activity log update"')
+          
+          push_status = os.system('git push origin main')
+          
+          if push_status != 0:
+              print("Push failed! Check Workflow Permissions in Repo Settings.")
           EOF
