@@ -1,0 +1,49 @@
+name: Natural Contribution Pattern
+
+on:
+  schedule:
+    # This triggers the check every 4 hours (UTC)
+    - cron: '0 */4 * * *'
+  workflow_dispatch: # Allows you to trigger it manually to test
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Random Activity Script
+        run: |
+          python - <<EOF
+          import random
+          import os
+          from datetime import datetime
+
+          if random.random() < 0.7:
+              print("Skipping this window to maintain a natural pattern.")
+              exit(0)
+
+          iterations = random.randint(1, 3)
+          
+          for i in range(iterations):
+              timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+              
+              with open("activity_log.txt", "a") as f:
+                  f.write(f"Logged activity at {timestamp} - Iteration {i}\n")
+              
+              os.system('git config --global user.name "Your GitHub Username"')
+              os.system('git config --global user.email "your-email@example.com"')
+              os.system('git add activity_log.txt')
+              
+              messages = ["docs: update log", "refactor: minor cleaning", "chore: sync"]
+              msg = random.choice(messages)
+              os.system(f'git commit -m "{msg} {random.randint(10,99)}"')
+
+          os.system('git push origin main')
+          EOF
